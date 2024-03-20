@@ -10,7 +10,7 @@ public class GlossaryItem implements Serializable{
     private LocalDate expiryDate;
     private String manufacturerName;
 
-    public GlossaryItem(String itemCode, String itemName, double price, double weight, LocalDate manufacturingDate,LocalDate expiryDate, String manufacturerName, double discount) {
+    public GlossaryItem(String itemCode, String itemName, double price, double weight, LocalDate manufacturingDate,LocalDate expiryDate, String manufacturerName) {
         this.itemCode = itemCode;
         this.itemName = itemName;
         this.price = price;

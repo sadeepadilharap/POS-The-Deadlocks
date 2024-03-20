@@ -14,29 +14,29 @@ public class Store implements Serializable{
     private Map<String, GlossaryItem> makeGlossary() {
         // Hardcoded item details
         Map<String, GlossaryItem> glossary = new HashMap<>();
-        glossary.put("001", new GlossaryItem("001", "Apple", 2.5, 1.0, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Apple Inc.", 5));
-        glossary.put("002", new GlossaryItem("002", "Banana", 1.5, 1.0, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Banana Inc.", 10));
-        glossary.put("003", new GlossaryItem("003", "Orange", 3.0, 1.0, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Orange Inc.", 15));
+        glossary.put("001", new GlossaryItem("001", "Apple", 100, 1.0, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Apple Inc."));
+        glossary.put("002", new GlossaryItem("002", "Banana", 200, 1.0, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Banana Inc."));
+        glossary.put("003", new GlossaryItem("003", "Orange", 300, 1.0, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Orange Inc."));
 
         //Some more dry items like milk powder etc.
-        glossary.put("004", new GlossaryItem("004", "Milk Powder", 5.0, 0.5, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Milk Inc.", 5));
-        glossary.put("005", new GlossaryItem("005", "Sugar", 1.5, 1.0, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Sugar Inc.", 10));
-        glossary.put("006", new GlossaryItem("006", "Salt", 3.0, 0.6, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Salt Inc.", 15));
+        glossary.put("004", new GlossaryItem("004", "Milk Powder", 800, 0.5, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Raththi"));
+        glossary.put("005", new GlossaryItem("005", "Sugar", 400, 1.0, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Keels"));
+        glossary.put("006", new GlossaryItem("006", "Salt", 250, 0.6, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Sun Salt"));
 
         //Items like soap shampoo
-        glossary.put("007", new GlossaryItem("007", "Soap", 5.0, 0.5, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Soap Inc.", 5));
-        glossary.put("008", new GlossaryItem("008", "Shampoo", 1.5, 0.3, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Shampoo Inc.", 10));
-        glossary.put("009", new GlossaryItem("009", "Toothpaste", 3.0, 0.6, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Toothpaste Inc.", 15));
+        glossary.put("007", new GlossaryItem("007", "Soap", 160, 0.5, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Lux"));
+        glossary.put("008", new GlossaryItem("008", "Shampoo", 400, 0.3, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Dandex"));
+        glossary.put("009", new GlossaryItem("009", "Toothpaste", 400, 0.6, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Toothpaste Inc."));
 
         //Items like bread, butter, cheese
-        glossary.put("010", new GlossaryItem("010", "Bread", 5.0, 0.5, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Bread Inc.", 5));
-        glossary.put("011", new GlossaryItem("011", "Butter", 1.5, 0.3, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Butter Inc.", 10));
-        glossary.put("012", new GlossaryItem("012", "Cheese", 3.0, 0.6, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Cheese Inc.", 15));
+        glossary.put("010", new GlossaryItem("010", "Bread", 130, 0.5, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Bread Inc."));
+        glossary.put("011", new GlossaryItem("011", "Butter", 400, 0.3, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Astra"));
+        glossary.put("012", new GlossaryItem("012", "Cheese", 700, 0.6, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Nestle"));
 
         //Items like Medicines paracetamol, panadol , c vitamin
-        glossary.put("013", new GlossaryItem("013", "Paracetamol", 5.0, 0.5, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Paracetamol Inc.", 5));
-        glossary.put("014", new GlossaryItem("014", "Panadol", 1.5, 0.3, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Panadol Inc.", 10));
-        glossary.put("015", new GlossaryItem("015", "C Vitamin", 3.0, 0.6, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "C Vitamin Inc.", 15));
+        glossary.put("013", new GlossaryItem("013", "Paracetamol", 15, 0.005, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "SPC"));
+        glossary.put("014", new GlossaryItem("014", "Panadol", 5, 0.003, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Panadol"));
+        glossary.put("015", new GlossaryItem("015", "C Vitamin", 5, 0.006, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "SPC"));
 
         return glossary;
     }
@@ -49,9 +49,9 @@ public class Store implements Serializable{
     }
 
     //Add item to glossary generating the Item code automatically by incrementing the last item code and return new Item Code and generate the glossary item inside the method
-    public String add(String itemName, double price, double weight, LocalDate manufacturingDate, LocalDate expiryDate, String manufacturerName, double discount) {
+    public String add(String itemName, double price, double weight, LocalDate manufacturingDate, LocalDate expiryDate, String manufacturerName) {
         String itemCode = String.format("%03d", glossary.size() + 1);
-        glossary.put(itemCode, new GlossaryItem(itemCode, itemName, price, weight, manufacturingDate, expiryDate, manufacturerName, discount));
+        glossary.put(itemCode, new GlossaryItem(itemCode, itemName, price, weight, manufacturingDate, expiryDate, manufacturerName));
         return itemCode;
     }
 
