@@ -19,6 +19,10 @@ public class CustomerList implements Serializable{
         return customerList;
     }
 
+    public boolean isAvailable(String mobileNu) {
+        return customerList.containsKey(mobileNu);
+    }
+
     public Customer get(String mobileNu) {
         return customerList.get(mobileNu);
     }
