@@ -106,10 +106,11 @@ public class App {
             System.out.println("Do you want a new bill (yes/no) : ");
             String newBill = scanner.nextLine();
             BillCatalog billCatalog = SaveManager.loadBillCatalog();
-
+            Bill bill = null;
             if (newBill.equalsIgnoreCase("yes")) {
-                Bill bill = new Bill(cashierName, branch, customer == null ? "Guest" : customer.getName());
+                bill = new Bill(cashierName, branch, customer == null ? "Guest" : customer.getName());
                 billCatalog.add(bill);
+                break;
 
             } else if (newBill.equalsIgnoreCase("no")) {
                 while (true) {
@@ -117,17 +118,21 @@ public class App {
                     String pendingBill = scanner.nextLine();
 
                     if (pendingBill.equalsIgnoreCase("yes")) {
-                        System.out.print("Enter bill number : ");
-                        String billNumber = scanner.nextLine();
-                        Bill bill = billCatalog.get(billNumber);
-                        if (bill == null) {
-                            System.out.println("Invalid bill number.");
-                        }
-                        if (bill.isComplete) {
-                            System.out.println("Bill already completed.");
-                            break;
+                        while (true) {
+                            System.out.print("Enter bill number (press 'A' for abort): ");
+                            String billNumber = scanner.nextLine();
+                            bill = billCatalog.get(billNumber);
+                            if (bill == null) {
+                                System.out.println("Invalid bill number.");
+                            } else if (bill.isComplete) {
+                                System.out.println("Bill already completed.");
+                                break;
+                            } else if (billNumber.equalsIgnoreCase("A")) {
+                                break;
+                            }
                         }
                         break;
+
                     } else if (pendingBill.equalsIgnoreCase("no")) {
                         System.out.println("Billing process ended.");
                         break;
@@ -140,31 +145,33 @@ public class App {
             } else {
                 System.out.println("Invalid input");
             }
-            while (true) {
-                System.out.println("Enter item code (enter 'E' to end) : ");
-                String itemCode = scanner.nextLine();
-                if (itemCode.equalsIgnoreCase("E")) {
-                    System.out.println("Billing process ended.");
-                    break;
-                } else {
-                    try {
-                        double quantity = 1;
-                        GlossaryItem item = store.get(itemCode);
-                        System.out.print("Quantity or Weight(kg) : ");
-                        quantity = scanner.nextDouble();
-                        System.out.print("Discount percentage : ");
-                        double discountPercentage = scanner.nextDouble();
-                        double price = item.getPrice() * quantity * discountPercentage / 100;
-                        bill.addItem(item, quantity, price, discountPercentage);
-                    } catch (ItemCodeNotFound e) {
-                        System.out.println("Item code not found. Please enter a valid item code.");
-                    }
+        }
+        while (true) {
+            System.out.println("Enter item code (enter 'E' to end) : ");
+            String itemCode = scanner.nextLine();
+            if (itemCode.equalsIgnoreCase("E")) {
+                System.out.println("Billing process ended.");
+                break;
+            } else {
+                try {
+                    double quantity = 1;
+                    GlossaryItem item = store.get(itemCode);
+                    System.out.print("Quantity or Weight(kg) : ");
+                    quantity = scanner.nextDouble();
+                    System.out.print("Discount percentage : ");
+                    double discountPercentage = scanner.nextDouble();
+                    double price = item.getPrice() * quantity * discountPercentage / 100;
+                    bill.addItem(item, quantity, price, discountPercentage);
+                } catch (ItemCodeNotFound e) {
+                    System.out.println("Item code not found. Please enter a valid item code.");
                 }
             }
-            SaveManager.saveBillCatalog(billCatalog);
-            break;
-
         }
+        SaveManager.saveBillCatalog(billCatalog);
+        break;
+
+    }
+
     }
 
     public static void printBill(Bill bill) {
