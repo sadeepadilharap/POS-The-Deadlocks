@@ -157,30 +157,29 @@ public class App {
             System.out.println("Billing process ended.");
             return;
         } else {
-        }
-        while (true) {
-            System.out.println("Enter item code (enter 'E' to end) : ");
-            String itemCode = scanner.nextLine();
-            if (itemCode.equalsIgnoreCase("E")) {
-                System.out.println("Billing process ended.");
-                break;
-            } else {
-                try {
-                    double quantity = 1;
-                    GlossaryItem item = store.get(itemCode);
-                    System.out.print("Quantity or Weight(kg) : ");
-                    quantity = scanner.nextDouble();
-                    System.out.print("Discount percentage : ");
-                    double discountPercentage = scanner.nextDouble();
-                    double price = item.getPrice() * quantity * discountPercentage / 100;
-                    bill.addItem(item, quantity, price, discountPercentage);
-                } catch (ItemCodeNotFound e) {
-                    System.out.println("Item code not found. Please enter a valid item code.");
+            while (true) {
+                System.out.println("Enter item code (enter 'E' to end) : ");
+                String itemCode = scanner.nextLine();
+                if (itemCode.equalsIgnoreCase("E")) {
+                    System.out.println("Billing process ended.");
+                    break;
+                } else {
+                    try {
+                        double quantity = 1;
+                        GlossaryItem item = store.get(itemCode);
+                        System.out.print("Quantity or Weight(kg) : ");
+                        quantity = scanner.nextDouble();
+                        System.out.print("Discount percentage : ");
+                        double discountPercentage = scanner.nextDouble();
+                        double price = item.getPrice() * quantity * discountPercentage / 100;
+                        bill.addItem(item, quantity, price, discountPercentage);
+                    } catch (ItemCodeNotFound e) {
+                        System.out.println("Item code not found. Please enter a valid item code.");
+                    }
                 }
             }
+            SaveManager.saveBillCatalog(billCatalog);
         }
-        SaveManager.saveBillCatalog(billCatalog);
-    }
 
     }
 
