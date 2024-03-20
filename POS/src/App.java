@@ -101,51 +101,47 @@ public class App {
             }
         }
 
-
-
         while (true) {
-            //chech the customer wants a new bill or continue pending bill
+            // check the customer wants a new bill or continue pending bill
             System.out.println("Do you want a new bill (yes/no) : ");
             String newBill = scanner.nextLine();
             BillCatalog billCatalog = SaveManager.loadBillCatalog();
             if (newBill.equalsIgnoreCase("yes")) {
                 Bill bill = new Bill(cashierName, branch, customer == null ? "Guest" : customer.getName());
+                billCatalog.add(bill);
 
                 while (true) {
                     System.out.println("Enter item code (enter 'E' to end) : ");
                     String itemCode = scanner.nextLine();
                     if (itemCode.equalsIgnoreCase("E")) {
+                        System.out.println("Billing process ended.");
                         break;
-                    }
-                    try {
-                        double quantity = 1;
-                        GlossaryItem item = store.get(itemCode);
-                        System.out.print("Quantity or Weight(kg) : ");
-                        quantity = scanner.nextDouble();
-                        System.out.print("Discount percentage : ");
-                        double discountPercentage = scanner.nextDouble();
-                        double price = item.getPrice() * quantity *discountPercentage/100;
-                        bill.addItem(item, quantity, price, discountPercentage);
-                    } catch (ItemCodeNotFound e) {
-                        System.out.println("Item code not found. Please enter a valid item code.");
+                    } else {
+                        try {
+                            double quantity = 1;
+                            GlossaryItem item = store.get(itemCode);
+                            System.out.print("Quantity or Weight(kg) : ");
+                            quantity = scanner.nextDouble();
+                            System.out.print("Discount percentage : ");
+                            double discountPercentage = scanner.nextDouble();
+                            double price = item.getPrice() * quantity * discountPercentage / 100;
+                            bill.addItem(item, quantity, price, discountPercentage);
+                        } catch (ItemCodeNotFound e) {
+                            System.out.println("Item code not found. Please enter a valid item code.");
+                        }
                     }
                 }
-                printBill(bill);
-                SaveManager.saveBill(bill);
+                SaveManager.saveBillCatalog(billCatalog);
             } else if (newBill.equalsIgnoreCase("no")) {
-                System.out.println("Enter bill number : ");
-                int billNumber = scanner.nextInt();
-                Bill bill = SaveManager.loadBill(billNumber);
-                printBill(bill);
-                SaveManager.removeBill(billNumber);
+
+                System.out.println("Do you want to continue a pending bill (yes/no) : ");
+
             } else {
                 System.out.println("Invalid input");
             }
-            
+
         }
     }
-
-
 
     public static void printBill(Bill bill) {
         double  TotalDiscount = 0;
@@ -166,18 +162,19 @@ public class App {
         System.out.println("Total price: " + bill.getTotalPrice());
     }
 
-    
 }
 /*
-    public void addItem(GlossaryItem item, double quantity, double price, double discountPercentage) {
-        List<Object> details = new ArrayList<>();
-        details.add(item);
-        details.add(quantity);
-        details.add(price);
-        details.add(discountPercentage);
-        itemList.add(details);
-        totalPrice += price * quantity;
-    } */
+ * public void addItem(GlossaryItem item, double quantity, double price, double
+ * discountPercentage) {
+ * List<Object> details = new ArrayList<>();
+ * details.add(item);
+ * details.add(quantity);
+ * details.add(price);
+ * details.add(discountPercentage);
+ * itemList.add(details);
+ * totalPrice += price * quantity;
+ * }
+ */
 /*
  * Sure, here's a full description you can provide to the GitHub Copilot AI for
  * implementing the Point of Sale (POS) system for the supermarket:
