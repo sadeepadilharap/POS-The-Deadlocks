@@ -8,6 +8,7 @@ public class App {
 
 
     public static void printBill(Bill bill) {
+        double  TotalDiscount = 0;
         System.out.println("Cashier: " + bill.getCashierName());
         System.out.println("Branch: " + bill.getBranch());
         System.out.println("Customer: " + bill.getCustomerName());
@@ -18,9 +19,10 @@ public class App {
             double quantity = (double) details.get(1);
             double price = (double) details.get(2);
             double discountPercentage = (double) details.get(3);
-            System.out.println(groceryItem.getItemName() + " - " + quantity + " x " + groceryItem.getPrice() + " - " + discountPercentage + "%");
+            System.out.println(groceryItem.getItemName() + " - " + quantity + " x " + groceryItem.getPrice() + " - " + discountPercentage*100 + "% = " + price);
+            TotalDiscount += groceryItem.getPrice() * quantity * discountPercentage;
         }
-        System.out.println("Total discount: " + bill.getTotalPrice() * 0.1);
+        System.out.println("Total discount: " + TotalDiscount);
         System.out.println("Total price: " + bill.getTotalPrice());
     }
 }
