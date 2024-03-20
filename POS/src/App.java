@@ -2,6 +2,13 @@
 
 import java.util.List;
 import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -143,23 +150,60 @@ public class App {
         }
     }
 
+    //Printing the bill
     public static void printBill(Bill bill) {
-        double  TotalDiscount = 0;
-        System.out.println("Cashier: " + bill.getCashierName());
-        System.out.println("Branch: " + bill.getBranch());
-        System.out.println("Customer: " + bill.getCustomerName());
-        System.out.println("Items:");
-        for (Object item : bill.getItemList()) {
-            List<Object> details = (List<Object>) item;
-            GlossaryItem groceryItem = (GlossaryItem) details.get(0);
-            double quantity = (double) details.get(1);
-            double price = (double) details.get(2);
-            double discountPercentage = (double) details.get(3);
-            System.out.println("\t"+groceryItem.getItemName() + " : " + quantity + " x " + groceryItem.getPrice() + "/= - " + discountPercentage*100 + "% = " + price);
-            TotalDiscount += groceryItem.getPrice() * quantity * discountPercentage;
+        File file = new File("Bill.txt");
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
+            // =======Welcome to Deadlocks Store========
+            writer.println("======= Welcome to Deadlocks Store ========\n\n");
+            writer.println("Date and time: " + LocalDateTime.now());
+            writer.println("Cashier: " + bill.getCashierName());
+            writer.println("Branch: " + bill.getBranch());
+            writer.println("Customer: " + bill.getCustomerName());
+            writer.println("Items:");
+            double TotalDiscount = 0;
+            for (Object item : bill.getItemList()) {
+                List<Object> details = (List<Object>) item;
+                GlossaryItem groceryItem = (GlossaryItem) details.get(0);
+                double quantity = (double) details.get(1);
+                double price = (double) details.get(2);
+                double discountPercentage = (double) details.get(3);
+                writer.println("\t" + groceryItem.getItemName() + " : " + quantity + " x " + groceryItem.getPrice()
+                        + "LKR - " + discountPercentage * 100 + "% = " + price);
+                TotalDiscount += groceryItem.getPrice() * quantity * discountPercentage;
+            }
+            writer.println("Total discount: " + TotalDiscount);
+            writer.println("Total price: " + bill.getTotalPrice());
+
+            writer.println("======= Thank you for shopping with us! =======\n\n");
+
+            // Print to terminal
+            System.out.println("======= Welcome to Deadlocks Store ========\n\n");
+            System.out.println("Date and time: " + LocalDateTime.now());
+            System.out.println("Cashier: " + bill.getCashierName());
+            System.out.println("Branch: " + bill.getBranch());
+            System.out.println("Customer: " + bill.getCustomerName());
+            System.out.println("Items:");
+            TotalDiscount = 0;
+            for (Object item : bill.getItemList()) {
+                List<Object> details = (List<Object>) item;
+                GlossaryItem groceryItem = (GlossaryItem) details.get(0);
+                double quantity = (double) details.get(1);
+                double price = (double) details.get(2);
+                double discountPercentage = (double) details.get(3);
+                System.out.println("\t" + groceryItem.getItemName() + " : " + quantity + " x " + groceryItem.getPrice()
+                        + "LKR - " + discountPercentage * 100 + "% = " + price);
+                TotalDiscount += groceryItem.getPrice() * quantity * discountPercentage;
+            }
+            System.out.println("Total discount: " + TotalDiscount);
+            System.out.println("Total price: " + bill.getTotalPrice());
+
+            System.out.println("======= Thank you for shopping with us! =======\n\n");
+
+            System.out.println("Bill.txt created successfully.");
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
         }
-        System.out.println("Total discount: " + TotalDiscount);
-        System.out.println("Total price: " + bill.getTotalPrice());
     }
 
 }
