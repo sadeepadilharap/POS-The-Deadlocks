@@ -1,6 +1,6 @@
-import java.util.List;
-import java.util.ArrayList;
+//Todo change Item manufacturer to more generic name like supplier
 
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -34,63 +34,82 @@ public class App {
                  */
             }
         }
-        System.out.println("Welcome " + cashierName);
+        System.out.println("Welcome " + cashierName + " !!");
         Store store = SaveManager.loadStore();
         CustomerList customers = SaveManager.loadCustomers();
         Customer customer = null;
+        while (true) {
+            System.out.println("Enter customer mobile number (enter 'I' for ignore) (enter 'R' for Register): ");
+            String mobileNumber = scanner.nextLine();
+            if (mobileNumber.equalsIgnoreCase("I")) {
+                System.out.println("You are continue as a guest customer.");
+                break;
+            } else if (mobileNumber.equalsIgnoreCase("I")) {
+                if (customers.isAvailable(mobileNumber)) {
+                    customer = customers.get(mobileNumber);
+                    System.out.println("Welcome back " + customer.getName());
+                    break;
+                } else {
+                    while (true) {
+                        System.out.println("Customer is not registerd or invalid mobile number.");
+                        System.out.print("Does customer wants to enter mobile number again (yes/no) : ");
+                        String reEnter = scanner.nextLine();
+                        if (reEnter.equalsIgnoreCase("yes")) {
+                            continue;
+                        } else if (reEnter.equalsIgnoreCase("no")) {
+                            while (true) {
+                                System.out.println("Does customer wants to register (yes/no) : ");
+                                String register = scanner.nextLine();
 
-        System.out.println("Enter customer mobile number (enter 'I' for ignore) (enter 'R' for Register): ");
-        String mobileNumber = scanner.nextLine();
-        if (mobileNumber.equalsIgnoreCase("I")) {
-            System.out.println("You are continue as a guest customer.");
-        } else if (mobileNumber.equalsIgnoreCase("I")) {
-            if (customers.isAvailable(mobileNumber)) {
-                customer = customers.get(mobileNumber);
-                System.out.println("Welcome back " + customer.getName());
-            } else {
-                while (true) {
-                    System.out.println("Customer is not registerd or invalid mobile number.");
-                    System.out.print("Does customer wants to enter mobile number again (yes/no) : ");
-                    String reEnter = scanner.nextLine();
-                    if (reEnter.equalsIgnoreCase("yes")) {
-                        continue;
-                    } else if (reEnter.equalsIgnoreCase("no")) {
-                        System.out.println("Does customer wants to register (yes/no) : ");
-                        String register = scanner.nextLine();
-
-                        // New customer registration
-                        if (register.equalsIgnoreCase("yes")) {
-                            System.out.print("Enter customer name : ");
-                            String name = scanner.nextLine();
-                            System.out.print("Enter customer address : ");
-                            String address = scanner.nextLine();
-                            customers.add(name, mobileNumber, address);
-                            SaveManager.saveCustomers(customers);
-                            break;
-                        } else if (register.equalsIgnoreCase("no")) {
+                                // New customer registration
+                                if (register.equalsIgnoreCase("yes")) {
+                                    System.out.print("Enter customer name : ");
+                                    String name = scanner.nextLine();
+                                    System.out.print("Enter customer address : ");
+                                    String address = scanner.nextLine();
+                                    customers.add(name, mobileNumber, address);
+                                    SaveManager.saveCustomers(customers);
+                                    break;
+                                } else if (register.equalsIgnoreCase("no")) {
+                                    System.out.println("You are continue as a guest customer.");
+                                    break;
+                                } else {
+                                    System.out.println("Invalid input");
+                                }
+                            }
                             break;
                         } else {
                             System.out.println("Invalid input");
                         }
-                    }else{
-                        System.out.println("Invalid input");
+
                     }
 
                 }
-
+                break;
+            } else if (mobileNumber.equalsIgnoreCase("R")) {
+                System.out.print("Enter customer mobile number : ");
+                String mobileNumberNew = scanner.nextLine();
+                System.out.print("Enter customer name : ");
+                String name = scanner.nextLine();
+                System.out.print("Enter customer address : ");
+                String address = scanner.nextLine();
+                customers.add(name, mobileNumberNew, address);
+                SaveManager.saveCustomers(customers);
+                break;
+            } else {
+                System.out.println("Invalid input");
             }
-        } else if (mobileNumber.equalsIgnoreCase("R")) {
-            System.out.print("Enter customer name : ");
-            String name = scanner.nextLine();
-            System.out.print("Enter customer address : ");
-            String address = scanner.nextLine();
-            customers.add(name, mobileNumber, address);
-            SaveManager.saveCustomers(customers);
-        } else {
-            System.out.println("Invalid input");
+        }
+
+
+
+        while (true) {
+            //chech the customer wants a new bill or continue pending bill
+            System.out.println("Do you want a new bill (yes/no) : ");
+            String newBill = scanner.nextLine();
+            
         }
     }
-
 
     public static void printBill(Bill bill) {
         System.out.println("Cashier: " + bill.getCashierName());
@@ -108,21 +127,10 @@ public class App {
         System.out.println("Total discount: " + bill.getTotalPrice() * 0.1);
         System.out.println("Total price: " + bill.getTotalPrice());
     }
+
+    
 }
 
-<<<<<<< HEAD
-=======
-/*    public void addItem(GlossaryItem item, double quantity, double price, double discountPercentage) {
-        List<Object> details = new ArrayList<>();
-        details.add(item);
-        details.add(quantity);
-        details.add(price);
-        details.add(discountPercentage);
-        itemList.add(details);
-        totalPrice += price * quantity;
-    } */
-
->>>>>>> Dasun
 /*
  * Sure, here's a full description you can provide to the GitHub Copilot AI for
  * implementing the Point of Sale (POS) system for the supermarket:
