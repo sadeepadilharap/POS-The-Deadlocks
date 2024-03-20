@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 public class App {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("Welcome to the POS system");
         System.out.print("Please login cashier : ");
         String cashier = scanner.nextLine();
@@ -33,11 +32,7 @@ public class App {
                 break;
             } else {
                 System.out.println("Invalid cashier name.");
-                /*
-                 * 
-                 * exit the programme
-                 * 
-                 */
+
             }
         }
         System.out.println("Welcome " + cashierName + " !!");
@@ -50,7 +45,18 @@ public class App {
             if (mobileNumber.equalsIgnoreCase("I")) {
                 System.out.println("You are continue as a guest customer.");
                 break;
-            } else if (mobileNumber.equalsIgnoreCase("I")) {
+
+            } else if (mobileNumber.equalsIgnoreCase("R")) {
+                System.out.print("Enter customer mobile number : ");
+                String mobileNumberNew = scanner.nextLine();
+                System.out.print("Enter customer name : ");
+                String name = scanner.nextLine();
+                System.out.print("Enter customer address : ");
+                String address = scanner.nextLine();
+                customers.add(name, mobileNumberNew, address);
+                SaveManager.saveCustomers(customers);
+                break;
+            } else {
                 if (customers.isAvailable(mobileNumber)) {
                     customer = customers.get(mobileNumber);
                     System.out.println("Welcome back " + customer.getName());
@@ -92,18 +98,6 @@ public class App {
 
                 }
                 break;
-            } else if (mobileNumber.equalsIgnoreCase("R")) {
-                System.out.print("Enter customer mobile number : ");
-                String mobileNumberNew = scanner.nextLine();
-                System.out.print("Enter customer name : ");
-                String name = scanner.nextLine();
-                System.out.print("Enter customer address : ");
-                String address = scanner.nextLine();
-                customers.add(name, mobileNumberNew, address);
-                SaveManager.saveCustomers(customers);
-                break;
-            } else {
-                System.out.println("Invalid input");
             }
         }
         Bill bill = null;
