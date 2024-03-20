@@ -1,6 +1,7 @@
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class GlossaryItem {
+public class GlossaryItem implements Serializable{
     private String itemCode;
     private String itemName;
     private double price;

@@ -10,6 +10,7 @@ public class Store implements Serializable{
         this.glossary = makeGlossary();
     }
 
+    //Make some dummy items for testing purposes
     private Map<String, GlossaryItem> makeGlossary() {
         // Hardcoded item details
         Map<String, GlossaryItem> glossary = new HashMap<>();
