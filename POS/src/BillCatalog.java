@@ -1,7 +1,8 @@
 import java.util.Map;
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class BillCatalog {
+public class BillCatalog implements Serializable {
     private Map<String, Bill> billList;
 
     public BillCatalog() {
