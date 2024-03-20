@@ -10,6 +10,7 @@ public class Bill implements Serializable {
     private String customerName;
     public List<Object> itemList;
     private double totalPrice;
+    private String billNu;
     
 
     public Bill(String cashierName, String branch, String customerName) {
@@ -57,5 +58,13 @@ public class Bill implements Serializable {
 
     public void setComplete() {
         isComplete = true;
+    }
+
+    public void setBillNu(String billNu) {
+        this.billNu = billNu;
+    }
+
+    public String getBillNu() {
+        return billNu;
     }
 }

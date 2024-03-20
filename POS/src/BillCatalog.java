@@ -13,6 +13,7 @@ public class BillCatalog implements Serializable{
     public String add(Bill bill) {
         String billId = String.valueOf(billList.size() + 1);
         billList.put(billId, bill);
+        bill.setBillNu(billId);
         return billId;
     }
 

@@ -129,6 +129,9 @@ public class App {
                             System.out.print("Enter bill number (press 'A' for abort): ");
                             String billNumber = scanner.nextLine();
                             bill = billCatalog.get(billNumber);
+                            if (billNumber.equalsIgnoreCase("A")) {
+                                break;
+                            }
                             if (bill == null) {
                                 System.out.println("Invalid bill number.");
                             } else if (bill.isComplete) {
@@ -189,6 +192,7 @@ public class App {
                 printBill(bill);
                 SaveManager.saveBillCatalog(billCatalog);
             } else {
+                System.out.println("Bill numbr is " + bill.getBillNu());
                 System.out.println("Bill saved as pending");
                 System.out.println("Billing process ended.");
             }
@@ -207,6 +211,7 @@ public class App {
             writer.println("Cashier: " + bill.getCashierName());
             writer.println("Branch: " + bill.getBranch());
             writer.println("Customer: " + bill.getCustomerName());
+            writer.println("Bill number: " + bill.getBillNu());
             writer.println("Items:");
             double TotalDiscount = 0;
             for (Object item : bill.getItemList()) {
@@ -230,6 +235,7 @@ public class App {
             System.out.println("Cashier: " + bill.getCashierName());
             System.out.println("Branch: " + bill.getBranch());
             System.out.println("Customer: " + bill.getCustomerName());
+            System.out.println("Bill number: " + bill.getBillNu());
             System.out.println("Items:");
             TotalDiscount = 0;
             for (Object item : bill.getItemList()) {
