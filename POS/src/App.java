@@ -38,154 +38,155 @@ public class App {
                 if (tryAgain.equalsIgnoreCase("no")) {
                     System.out.println("Exiting the system.");
                     System.exit(0);
+                }
             }
-        }
-        System.out.println("Welcome " + cashierName + " !!");
-        Store store = SaveManager.loadStore();
-        CustomerList customers = SaveManager.loadCustomers();
-        Customer customer = null;
-        while (true) {
-            System.out.println("Enter customer mobile number (enter 'I' for ignore) (enter 'R' for Register): ");
-            String mobileNumber = scanner.nextLine();
-            if (mobileNumber.equalsIgnoreCase("I")) {
-                System.out.println("You are continue as a guest customer.");
-                break;
+            System.out.println("Welcome " + cashierName + " !!");
+            Store store = SaveManager.loadStore();
+            CustomerList customers = SaveManager.loadCustomers();
+            Customer customer = null;
+            while (true) {
+                System.out.println("Enter customer mobile number (enter 'I' for ignore) (enter 'R' for Register): ");
+                String mobileNumber = scanner.nextLine();
+                if (mobileNumber.equalsIgnoreCase("I")) {
+                    System.out.println("You are continue as a guest customer.");
+                    break;
 
-            } else if (mobileNumber.equalsIgnoreCase("R")) {
-                System.out.print("Enter customer mobile number : ");
-                String mobileNumberNew = scanner.nextLine();
-                System.out.print("Enter customer name : ");
-                String name = scanner.nextLine();
-                System.out.print("Enter customer address : ");
-                String address = scanner.nextLine();
-                customers.add(name, mobileNumberNew, address);
-                SaveManager.saveCustomers(customers);
-                break;
-            } else {
-                if (customers.isAvailable(mobileNumber)) {
-                    customer = customers.get(mobileNumber);
-                    System.out.println("Welcome back " + customer.getName());
+                } else if (mobileNumber.equalsIgnoreCase("R")) {
+                    System.out.print("Enter customer mobile number : ");
+                    String mobileNumberNew = scanner.nextLine();
+                    System.out.print("Enter customer name : ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter customer address : ");
+                    String address = scanner.nextLine();
+                    customers.add(name, mobileNumberNew, address);
+                    SaveManager.saveCustomers(customers);
                     break;
                 } else {
-                    while (true) {
-                        System.out.println("Customer is not registerd or invalid mobile number.");
-                        System.out.print("Does customer wants to enter mobile number again (yes/no) : ");
-                        String reEnter = scanner.nextLine();
-                        if (reEnter.equalsIgnoreCase("yes")) {
-                            continue;
-                        } else if (reEnter.equalsIgnoreCase("no")) {
-                            while (true) {
-                                System.out.println("Does customer wants to register (yes/no) : ");
-                                String register = scanner.nextLine();
+                    if (customers.isAvailable(mobileNumber)) {
+                        customer = customers.get(mobileNumber);
+                        System.out.println("Welcome back " + customer.getName());
+                        break;
+                    } else {
+                        while (true) {
+                            System.out.println("Customer is not registerd or invalid mobile number.");
+                            System.out.print("Does customer wants to enter mobile number again (yes/no) : ");
+                            String reEnter = scanner.nextLine();
+                            if (reEnter.equalsIgnoreCase("yes")) {
+                                continue;
+                            } else if (reEnter.equalsIgnoreCase("no")) {
+                                while (true) {
+                                    System.out.println("Does customer wants to register (yes/no) : ");
+                                    String register = scanner.nextLine();
 
-                                // New customer registration
-                                if (register.equalsIgnoreCase("yes")) {
-                                    System.out.print("Enter customer name : ");
-                                    String name = scanner.nextLine();
-                                    System.out.print("Enter customer address : ");
-                                    String address = scanner.nextLine();
-                                    customers.add(name, mobileNumber, address);
-                                    SaveManager.saveCustomers(customers);
+                                    // New customer registration
+                                    if (register.equalsIgnoreCase("yes")) {
+                                        System.out.print("Enter customer name : ");
+                                        String name = scanner.nextLine();
+                                        System.out.print("Enter customer address : ");
+                                        String address = scanner.nextLine();
+                                        customers.add(name, mobileNumber, address);
+                                        SaveManager.saveCustomers(customers);
+                                        break;
+                                    } else if (register.equalsIgnoreCase("no")) {
+                                        System.out.println("You are continue as a guest customer.");
+                                        break;
+                                    } else {
+                                        System.out.println("Invalid input");
+                                    }
+                                }
+                                break;
+                            } else {
+                                System.out.println("Invalid input");
+                            }
+
+                        }
+
+                    }
+                    break;
+                }
+            }
+            Bill bill = null;
+            BillCatalog billCatalog = SaveManager.loadBillCatalog();
+
+            while (true) {
+                // check the customer wants a new bill or continue pending bill
+                System.out.println("Do you want a new bill (yes/no) : ");
+                String newBill = scanner.nextLine();
+                if (newBill.equalsIgnoreCase("yes")) {
+                    bill = new Bill(cashierName, branch, customer == null ? "Guest" : customer.getName());
+                    billCatalog.add(bill);
+                    break;
+
+                } else if (newBill.equalsIgnoreCase("no")) {
+                    while (true) {
+                        System.out.println("Do you want to continue a pending bill (yes/no) : ");
+                        String pendingBill = scanner.nextLine();
+
+                        if (pendingBill.equalsIgnoreCase("yes")) {
+                            while (true) {
+                                System.out.print("Enter bill number (press 'A' for abort): ");
+                                String billNumber = scanner.nextLine();
+                                bill = billCatalog.get(billNumber);
+                                if (bill == null) {
+                                    System.out.println("Invalid bill number.");
+                                } else if (bill.isComplete) {
+                                    System.out.println("Bill already completed.");
                                     break;
-                                } else if (register.equalsIgnoreCase("no")) {
-                                    System.out.println("You are continue as a guest customer.");
+                                } else if (billNumber.equalsIgnoreCase("A")) {
                                     break;
-                                } else {
-                                    System.out.println("Invalid input");
                                 }
                             }
+                            break;
+
+                        } else if (pendingBill.equalsIgnoreCase("no")) {
+                            System.out.println("Billing process ended.");
                             break;
                         } else {
                             System.out.println("Invalid input");
                         }
-
                     }
+                    break;
 
+                } else {
+                    System.out.println("Invalid input");
                 }
-                break;
             }
-        }
-        Bill bill = null;
-        BillCatalog billCatalog = SaveManager.loadBillCatalog();
-
-        while (true) {
-            // check the customer wants a new bill or continue pending bill
-            System.out.println("Do you want a new bill (yes/no) : ");
-            String newBill = scanner.nextLine();
-            if (newBill.equalsIgnoreCase("yes")) {
-                bill = new Bill(cashierName, branch, customer == null ? "Guest" : customer.getName());
-                billCatalog.add(bill);
-                break;
-
-            } else if (newBill.equalsIgnoreCase("no")) {
+            if (bill == null) {
+                System.out.println("Billing process ended.");
+                return;
+            } else {
                 while (true) {
-                    System.out.println("Do you want to continue a pending bill (yes/no) : ");
-                    String pendingBill = scanner.nextLine();
-
-                    if (pendingBill.equalsIgnoreCase("yes")) {
-                        while (true) {
-                            System.out.print("Enter bill number (press 'A' for abort): ");
-                            String billNumber = scanner.nextLine();
-                            bill = billCatalog.get(billNumber);
-                            if (bill == null) {
-                                System.out.println("Invalid bill number.");
-                            } else if (bill.isComplete) {
-                                System.out.println("Bill already completed.");
-                                break;
-                            } else if (billNumber.equalsIgnoreCase("A")) {
-                                break;
-                            }
-                        }
-                        break;
-
-                    } else if (pendingBill.equalsIgnoreCase("no")) {
+                    System.out.println("Enter item code (enter 'E' to end) : ");
+                    String itemCode = scanner.nextLine();
+                    if (itemCode.equalsIgnoreCase("E")) {
                         System.out.println("Billing process ended.");
                         break;
                     } else {
-                        System.out.println("Invalid input");
+                        try {
+                            double quantity = 1;
+                            GlossaryItem item = store.get(itemCode);
+                            System.out.print("Quantity or Weight(kg) : ");
+                            quantity = scanner.nextDouble();
+                            System.out.print("Discount percentage : ");
+                            double discountPercentage = scanner.nextDouble();
+                            double price = item.getPrice() * quantity * discountPercentage / 100;
+                            bill.addItem(item, quantity, price, discountPercentage);
+                        } catch (ItemCodeNotFound e) {
+                            System.out.println("Item code not found. Please enter a valid item code.");
+                        }
                     }
                 }
-                break;
-
-            } else {
-                System.out.println("Invalid input");
-            }
-        }
-        if (bill == null) {
-            System.out.println("Billing process ended.");
-            return;
-        } else {
-            while (true) {
-                System.out.println("Enter item code (enter 'E' to end) : ");
-                String itemCode = scanner.nextLine();
-                if (itemCode.equalsIgnoreCase("E")) {
-                    System.out.println("Billing process ended.");
-                    break;
-                } else {
-                    try {
-                        double quantity = 1;
-                        GlossaryItem item = store.get(itemCode);
-                        System.out.print("Quantity or Weight(kg) : ");
-                        quantity = scanner.nextDouble();
-                        System.out.print("Discount percentage : ");
-                        double discountPercentage = scanner.nextDouble();
-                        double price = item.getPrice() * quantity * discountPercentage / 100;
-                        bill.addItem(item, quantity, price, discountPercentage);
-                    } catch (ItemCodeNotFound e) {
-                        System.out.println("Item code not found. Please enter a valid item code.");
-                    }
+                SaveManager.saveBillCatalog(billCatalog);
+                System.out.println("Do tou want to checkout (yes/no) : ");
+                String checkout = scanner.nextLine();
+                if (checkout.equalsIgnoreCase("yes")) {
+                    printBill(bill);
+                    bill.setComplete();
+                } else if (checkout.equalsIgnoreCase("no")) {
+                    System.out.println("Bill saved as pending.");
                 }
-            }
-            SaveManager.saveBillCatalog(billCatalog);
-            System.out.println("Do tou want to checkout (yes/no) : ");
-            String checkout = scanner.nextLine();
-            if (checkout.equalsIgnoreCase("yes")) {
-                printBill(bill);
-                bill.setComplete();
-            } else if (checkout.equalsIgnoreCase("no")) {
-                System.out.println("Bill saved as pending.");
-            }
 
+            }
         }
     }
 
