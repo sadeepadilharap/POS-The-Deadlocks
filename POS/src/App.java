@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("Welcome to the POS system");
         System.out.print("Please login cashier : ");
         String cashier = scanner.nextLine();
@@ -27,11 +26,7 @@ public class App {
                 break;
             } else {
                 System.out.println("Invalid cashier name.");
-                /*
-                 * 
-                 * exit the programme
-                 * 
-                 */
+                
             }
         }
         System.out.println("Welcome " + cashierName + " !!");
