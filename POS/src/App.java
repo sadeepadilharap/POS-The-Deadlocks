@@ -1,4 +1,5 @@
-//Todo change Item manufacturer to more generic name like supplier
+import java.util.List;
+import java.util.ArrayList;
 
 import java.util.Scanner;
 
@@ -89,8 +90,39 @@ public class App {
             System.out.println("Invalid input");
         }
     }
+
+
+    public static void printBill(Bill bill) {
+        System.out.println("Cashier: " + bill.getCashierName());
+        System.out.println("Branch: " + bill.getBranch());
+        System.out.println("Customer: " + bill.getCustomerName());
+        System.out.println("Items:");
+        for (Object item : bill.getItemList()) {
+            List<Object> details = (List<Object>) item;
+            GlossaryItem groceryItem = (GlossaryItem) details.get(0);
+            double quantity = (double) details.get(1);
+            double price = (double) details.get(2);
+            double discountPercentage = (double) details.get(3);
+            System.out.println(groceryItem.getItemName() + " - " + quantity + " x " + groceryItem.getPrice() + " - " + discountPercentage + "%");
+        }
+        System.out.println("Total discount: " + bill.getTotalPrice() * 0.1);
+        System.out.println("Total price: " + bill.getTotalPrice());
+    }
 }
 
+<<<<<<< HEAD
+=======
+/*    public void addItem(GlossaryItem item, double quantity, double price, double discountPercentage) {
+        List<Object> details = new ArrayList<>();
+        details.add(item);
+        details.add(quantity);
+        details.add(price);
+        details.add(discountPercentage);
+        itemList.add(details);
+        totalPrice += price * quantity;
+    } */
+
+>>>>>>> Dasun
 /*
  * Sure, here's a full description you can provide to the GitHub Copilot AI for
  * implementing the Point of Sale (POS) system for the supermarket:
