@@ -13,11 +13,11 @@ public class App {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to the POS system");
-        System.out.print("Please login cashier : ");
-        String cashier = scanner.nextLine();
         String cashierName;
         String branch;
         while (true) {
+            System.out.print("Please login cashier : ");
+            String cashier = scanner.nextLine();
             if (cashier.equalsIgnoreCase("Nimal")) {
                 cashierName = "Nimal";
                 branch = "Moratuwa";
@@ -32,6 +32,13 @@ public class App {
                 break;
             } else {
                 System.out.println("Invalid cashier name.");
+                System.out.println("Do you want to try again (yes/no) : ");
+                String tryAgain = scanner.nextLine();
+                if (tryAgain.equalsIgnoreCase("no")) {
+                    System.out.println("Exitting from the system");
+                    scanner.close();
+                    System.exit(0);
+                }
 
             }
         }
@@ -175,6 +182,17 @@ public class App {
                 }
             }
             SaveManager.saveBillCatalog(billCatalog);
+            System.out.println("Do you want to checkout (yes/no) : ");
+            String checkout = scanner.nextLine();
+            if (checkout.equalsIgnoreCase("yes")) {
+                bill.setComplete();
+                printBill(bill);
+                SaveManager.saveBillCatalog(billCatalog);
+            } else {
+                System.out.println("Bill saved as pending");
+                System.out.println("Billing process ended.");
+            }
+            
         }
         scanner.close();
     }
