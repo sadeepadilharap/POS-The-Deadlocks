@@ -107,13 +107,13 @@ public class App {
                 System.out.println("Invalid input");
             }
         }
+        Bill bill = null;
+        BillCatalog billCatalog = SaveManager.loadBillCatalog();
 
         while (true) {
             // check the customer wants a new bill or continue pending bill
             System.out.println("Do you want a new bill (yes/no) : ");
             String newBill = scanner.nextLine();
-            BillCatalog billCatalog = SaveManager.loadBillCatalog();
-            Bill bill = null;
             if (newBill.equalsIgnoreCase("yes")) {
                 bill = new Bill(cashierName, branch, customer == null ? "Guest" : customer.getName());
                 billCatalog.add(bill);
@@ -153,6 +153,11 @@ public class App {
                 System.out.println("Invalid input");
             }
         }
+        if (bill == null) {
+            System.out.println("Billing process ended.");
+            return;
+        } else {
+        }
         while (true) {
             System.out.println("Enter item code (enter 'E' to end) : ");
             String itemCode = scanner.nextLine();
@@ -175,8 +180,6 @@ public class App {
             }
         }
         SaveManager.saveBillCatalog(billCatalog);
-        break;
-
     }
 
     }
