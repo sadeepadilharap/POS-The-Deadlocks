@@ -148,34 +148,38 @@ public class App {
         }
         if (bill == null) {
             System.out.println("Billing process ended.");
+            scanner.close();
             return;
         } else {
-        }
-        while (true) {
-            System.out.println("Enter item code (enter 'E' to end) : ");
-            String itemCode = scanner.nextLine();
-            if (itemCode.equalsIgnoreCase("E")) {
-                System.out.println("Billing process ended.");
-                break;
-            } else {
-                try {
-                    double quantity = 1;
-                    GlossaryItem item = store.get(itemCode);
-                    System.out.print("Quantity or Weight(kg) : ");
-                    quantity = scanner.nextDouble();
-                    System.out.print("Discount percentage : ");
-                    double discountPercentage = scanner.nextDouble();
-                    double price = item.getPrice() * quantity * discountPercentage / 100;
-                    bill.addItem(item, quantity, price, discountPercentage);
-                } catch (ItemCodeNotFound e) {
-                    System.out.println("Item code not found. Please enter a valid item code.");
+            while (true) {
+                System.out.println("Enter item code (enter 'E' to end) : ");
+                String itemCode = scanner.nextLine();
+                if (itemCode.equalsIgnoreCase("E")) {
+                    System.out.println("Billing process ended.");
+                    break;
+                } else {
+                    try {
+                        double quantity = 1;
+                        GlossaryItem item = store.get(itemCode);
+                        System.out.print("Quantity or Weight(kg) : ");
+                        quantity = scanner.nextDouble();
+                        scanner.nextLine(); // Consume the newline character after reading double
+                        System.out.print("Discount percentage : ");
+                        double discountPercentage = scanner.nextDouble();
+                        scanner.nextLine(); // Consume the newline character after reading double
+                        double price = item.getPrice() * quantity * (1 - discountPercentage / 100);
+                        bill.addItem(item, quantity, price, discountPercentage);
+                    } catch (ItemCodeNotFound e) {
+                        System.out.println("Item code not found. Please enter a valid item code.");
+                    }
                 }
             }
+            SaveManager.saveBillCatalog(billCatalog);
         }
-        SaveManager.saveBillCatalog(billCatalog);
+        scanner.close();
     }
 
-    //Printing the bill
+    // Printing the bill
     public static void printBill(Bill bill) {
         File file = new File("Bill.txt");
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
