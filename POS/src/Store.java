@@ -1,8 +1,9 @@
 import java.util.Map;
 import java.util.HashMap;
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class Store{
+public class Store implements Serializable{
     private Map<String, GlossaryItem> glossary;
 
     public Store() {
@@ -12,13 +13,13 @@ public class Store{
     private Map<String, GlossaryItem> makeGlossary() {
         // Hardcoded item details
         Map<String, GlossaryItem> glossary = new HashMap<>();
-        glossary.put("001", new GlossaryItem("001", "Apple", 2.5, 0.5, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Apple Inc.", 5));
-        glossary.put("002", new GlossaryItem("002", "Banana", 1.5, 0.3, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Banana Inc.", 10));
-        glossary.put("003", new GlossaryItem("003", "Orange", 3.0, 0.6, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Orange Inc.", 15));
+        glossary.put("001", new GlossaryItem("001", "Apple", 2.5, 1.0, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Apple Inc.", 5));
+        glossary.put("002", new GlossaryItem("002", "Banana", 1.5, 1.0, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Banana Inc.", 10));
+        glossary.put("003", new GlossaryItem("003", "Orange", 3.0, 1.0, LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 10), "Orange Inc.", 15));
 
         //Some more dry items like milk powder etc.
         glossary.put("004", new GlossaryItem("004", "Milk Powder", 5.0, 0.5, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Milk Inc.", 5));
-        glossary.put("005", new GlossaryItem("005", "Sugar", 1.5, 0.3, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Sugar Inc.", 10));
+        glossary.put("005", new GlossaryItem("005", "Sugar", 1.5, 1.0, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Sugar Inc.", 10));
         glossary.put("006", new GlossaryItem("006", "Salt", 3.0, 0.6, LocalDate.of(2022, 1, 1), LocalDate.of(2023, 1, 10), "Salt Inc.", 15));
 
         //Items like soap shampoo
