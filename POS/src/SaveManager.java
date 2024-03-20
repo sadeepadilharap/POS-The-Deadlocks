@@ -53,27 +53,27 @@ public class SaveManager {
         }
     }
 
-    public static void saveBill(Bill bill) {
+    public static void saveBillCatalog(BillCatalog billCatalog) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(BILL_FILE))) {
-            out.writeObject(bill);
+            out.writeObject(billCatalog);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @SuppressWarnings("Unchecked")
-    public static Bill loadBill() {
+    public static BillCatalog loadBillCatalog() {
         File file = new File(BILL_FILE);
         if (!file.exists()) {
-            Bill bill = new Bill();
-            return bill;
+            BillCatalog billCatalog = new BillCatalog();
+            return billCatalog;
         }
 
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(BILL_FILE))) {
-            return (Bill) in.readObject();
+            return (BillCatalog) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            return new Bill();
+            return new BillCatalog();
         }
     }
 }
