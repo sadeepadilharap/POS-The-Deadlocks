@@ -1,0 +1,15 @@
+======= Welcome to Deadlocks Store ========
+
+
+Date and time: 2024-03-20T23:47:56.924758
+Cashier: Kamal
+Branch: Moratuwa
+Customer: John Doe
+Items:
+	Apple : 1.0 x 100.0LKR - 100.0% = 99.0
+	Banana : 1.0 x 200.0LKR - 100.0% = 198.0
+Total discount: 300.0
+Total price: 297.0
+======= Thank you for shopping with us! =======
+
+
